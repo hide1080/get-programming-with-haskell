@@ -263,7 +263,7 @@ processRecords n = booksToHtml . pairsToBooks . take n . marcToPairs
 -- main = do
 --     let html = booksToHtml myBooks
 --     TIO.putStrLn html
---     TIO.writeFile "books.html" html
+--     TIO.writeFile "books.i.html" html
 
 -- main :: IO ()
 -- main
@@ -277,5 +277,5 @@ main
   = do
     marcData <- B.readFile "sample.mrc"
     let processed = processRecords 50 marcData
-    -- TIO.writeFile "books.html" processed
-    print processed
+    TIO.writeFile "books.i.html" processed
+    -- print processed
