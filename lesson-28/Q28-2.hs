@@ -22,4 +22,7 @@ haversine coords1 coords2 = earthRadius * c
     earthRadius = 3961.0
 
 haversineIO :: IO LatLon -> IO LatLon -> IO Double
-haversineIO io1 io2 = haversine <$> io1 <*> io2
+haversineIO v1 v2 = haversine <$> v1 <*> v2
+
+haversineMaybe :: Maybe LatLon -> Maybe LatLon -> Maybe Double
+haversineMaybe v1 v2 = haversine <$> v1 <*> v2
