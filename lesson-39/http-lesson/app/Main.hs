@@ -1,5 +1,6 @@
 module Main (main) where
 
+import System.Environment
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Char8 as BC
 import qualified Data.ByteString.Lazy as L
@@ -11,6 +12,8 @@ import Network.HTTP.Types.Status
 --L39-4
 main :: IO ()
 main = do
+  token <- BC.pack <$> getEnv "NOAA_API_TOKEN"
+  let request = buildRequest token noaaHost method apiPath
   response <- httpLBS request
   let status = getResponseStatusCode response
   if status == 200
@@ -26,13 +29,17 @@ main = do
 
 --L39-1 API TOKEN (https://www.ncdc.noaa.gov/cdo-web/token)
 myToken :: BC.ByteString
-myToken = "NjNuuYnHPoEOHoNblKdelFYJGuzqFMDX"
+myToken = "..."
 
+-- www.ncdc.noaa.govからホスト名が変更された
 noaaHost :: BC.ByteString
-noaaHost = "www.ncdc.noaa.gov"
+noaaHost = "www.ncei.noaa.gov"
 
 apiPath :: BC.ByteString
-apiPath = "/cdo-Web/api/v2/datasets"
+apiPath = "/cdo-web/api/v2/datasets"
+
+method :: BC.ByteString
+method = "GET"
 
 --QC39-1
 --ファイル先頭に以下を書く（LANGUAGEプラグマ）
